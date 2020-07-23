@@ -1,0 +1,22 @@
+<div>
+    <h2>Login Component</h2>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form.value)">
+        <label>
+            username: 
+            <input name="username" type="text"
+            [(ngModel)]="username" required>
+        </label>
+        <div *ngIf="username">username is required</div>
+
+        <label>
+            password: 
+            <input name="password" type="password"
+            [(ngModel)]="password" required>
+        </label>
+        <div *ngIf="!password">password is required</div>
+
+        <button type="submit">Login</button>
+
+    </form>
+
+</div>
