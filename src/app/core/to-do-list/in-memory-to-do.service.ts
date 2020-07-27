@@ -11,10 +11,19 @@ export class InMemoryToDoService {
 
   createDb() {
     let todoItems: ToDo[] = [
-      {id: '307aceab-7880-f421-e8e1-7c9003372ae1', content: 'Getting up at 8 am', completed: true},
-      {id: '502fcedb-5130-d631-f9e1-9l8203592eb6', content: 'Sleeping', completed: false}
+      {id: 1000, content: 'Getting up at 8 am', completed: true},
+      {id: 1111, content: 'Sleeping', completed: false}
     ];
 
-    return { todoItems };
+    return { todoItems }; 
+  }
+
+  // Overrides the genId method to ensure that a todoItem always has an id.
+  // If the todoItems array is empty,
+  // the method below returns the initial number (1000).
+  // if the todoItems array is not empty, the method below returns the highest
+  // todoItem id + 1.
+  genId(todoItems: ToDo[]): number {
+    return todoItems.length > 0 ? Math.max(...todoItems.map(todo => todo.id)) + 1 : 1000;
   }
 }
