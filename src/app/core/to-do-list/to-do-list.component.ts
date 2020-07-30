@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ToDo } from "./to-do.model";
-import { ToDoService } from './to-do.service';
 import { TodoService } from './todo.service';
 
 
@@ -11,7 +10,7 @@ import { TodoService } from './todo.service';
 })
 export class ToDoListComponent implements OnInit {
   todoItems: ToDo[] = [];
-  //content = '';
+  itemCount: number;
 
   constructor(
     private todoService: TodoService,
@@ -21,6 +20,7 @@ export class ToDoListComponent implements OnInit {
   ngOnInit() {
     console.log('getTodoItems: success');
     this.getTodoItems();
+    this.countLeftItems();
   }
 
   getTodoItems(): void {
@@ -30,10 +30,13 @@ export class ToDoListComponent implements OnInit {
 
   addToDo(content: string) {
     console.log('addTodo: ' + content);
-    
     content = content.trim();
+
+    let newTodoItem = new ToDo();
+    newTodoItem.content = content;
+
     if (!content) {return;}
-    this.todoService.addToDo({ content } as ToDo)
+    this.todoService.addToDo(newTodoItem)
     .subscribe(todo => {
       this.todoItems.push(todo);
     });
@@ -41,19 +44,20 @@ export class ToDoListComponent implements OnInit {
 
   toggleTodo(todoItem: ToDo) {
       let i = this.todoItems.indexOf(todoItem);
-  
-      console.log('toggleTodo: success '+ JSON.stringify(todoItem));
 
       this.todoService.toggleTodoItem(todoItem)
       .subscribe(
-        todo => {this.todoItems = [
-          ...this.todoItems.slice(0,i),
-          ...this.todoItems.slice(i+1),
-          todo
-        ];
-        return null;
-        });
-      }
+        // t => {
+        //   this.todoItems = [
+        //   ...this.todoItems.slice(0,i),
+        //   ...this.todoItems.slice(i+1),
+        //   t
+        //   ];
+        // });
+
+        //() => this.moveToBottom(this.todoItems, i)
+      )
+    }
   
     removeTodo(todoItem: ToDo): void {
       this.todoItems = this.todoItems.filter(t => t !== todoItem);
@@ -62,10 +66,28 @@ export class ToDoListComponent implements OnInit {
       .subscribe();
     }
 
-    onToggleTriggered(todoItem: ToDo) {
-      console.log('onToggleTriggered: success');
-      
+
+    countLeftItems() {
+      this.itemCount = 0;
+      this.todoService.countLeftItems()
+      .subscribe(
+        () => {
+          for(let i = 0; i < this.todoItems.length; i++) {
+            if (this.todoItems[i].completed == false){
+              this.itemCount ++;
+            }
+          }
+        }
+      )
     }
+
+    // moveToBottom(todoItems: Array<ToDo>, i) {
+    //   let deleted = todoItems.splice(i, 1);
+    //   todoItems = todoItems.concat(deleted);
+    //   console.log('moveToBottom: ' + JSON.stringify(todoItems));
+      
+    //   return todoItems;
+    // }
   // addToDo() {
   //   this.todoService.addToDo(this.content)
   //   .then(todoItem => this.todoItems = [...this.todoItems, todoItem]);

@@ -42,15 +42,12 @@ export class TodoService {
   // PUT /todoItems/:id 
   toggleTodoItem(todoItem: ToDo): Observable<ToDo>{
     let url = `${this.todoUrl}/${todoItem.id}`;
-    console.log(url);
-    todoItem = Object.assign({}, todoItem, {completed: !todoItem.completed});
-
-    console.log('toggle service: ' + todoItem.completed);
+    console.log('toggleTodoItem service success: '+ url);
+    let updatedTodoItem = Object.assign(todoItem, {completed: !todoItem.completed});
     
     return this.http
-    .put(url, todoItem, this.httpOptions)
+    .put(url, updatedTodoItem, this.httpOptions)
     .pipe(
-      
       catchError(this.handleError<any>('toggleTodoItem'))
     );
  
@@ -67,6 +64,13 @@ export class TodoService {
       catchError(this.handleError<ToDo>('deleteTodoItemById'))
     );
 
+  }
+
+  countLeftItems(): Observable<ToDo[]> {
+    return this.http.get<ToDo[]>(this.todoUrl)
+    .pipe(
+      catchError(this.handleError<ToDo[]>('countLeftItems', []))
+    );
   }
 
     /**

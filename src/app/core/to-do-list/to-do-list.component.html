@@ -17,26 +17,28 @@
     
         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-center"
-            *ngFor="let item of todoItems" [class.completed]="item.completed">
+            *ngFor="let item of todoItems">
                 
                 <input type="checkbox" class="form-check-input"
-                (click)="toggleTodo(item); onToggleTriggered(item)" [checked]="item.completed">    
+                (click)="toggleTodo(item)" (change)="countLeftItems()" [checked]="item.completed" >    
                 
-                <div class="text-dark">{{item.content}}</div>
+                <div [class.completed]="item.completed">{{ item.content }}</div>
                 
                 <button class="close" aria-label="Close"
                 (click)="removeTodo(item)">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                
+            {{item | json}}  
             </li>
+            
         </ul>
     </main>
 
-    <footer class="d-flex justify-content-between align-items-center"
+    <footer class="d-flex justify-content-between align-items-center mt-3"
     *ngIf="todoItems?.length > 0">
-        <span>
-            <strong>{{ todoItems?.length }}</strong> {{ todoItems?.length == 1 ? 'item' : 'items'}} left
+        <span *ngIf="itemCount != 0">
+            <strong>{{ itemCount }}</strong> {{ itemCount == 1? 'item' : 'items'}} left
+            
         </span>
         <ul class="filter list-group list-group-horizontal justify-content-end">
             <li class="list-group-item"><a href="">All</a></li>

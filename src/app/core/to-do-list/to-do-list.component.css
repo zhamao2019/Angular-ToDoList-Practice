@@ -1,7 +1,8 @@
 .filter li{
     border: none;
 }
-li .completed {
-    color: #d9d9d9;
+.completed {
+
+    color: #cccccc;
     text-decoration: line-through;
 }
