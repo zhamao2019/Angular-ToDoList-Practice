@@ -5,8 +5,8 @@ import { ToDoListComponent } from './core/to-do-list/to-do-list.component';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'todo', pathMatch: 'full'},
-  {path: 'todo', component: ToDoListComponent},
+  {path: '', redirectTo: 'todo/ALL', pathMatch: 'full'},
+  {path: 'todo/:filter', component: ToDoListComponent},
   {path: 'login', component: LoginComponent},
 ];
 

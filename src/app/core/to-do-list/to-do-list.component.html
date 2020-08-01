@@ -7,7 +7,7 @@
             #content  (keyup.enter)="addToDo(content.value); content.value=''">
          
             <button type="submit" class="btn btn-primary ml-2"
-            (click)="addToDo(content.value); content.value=''">Add</button>
+            (click)="addToDo(content.value); countLeftItems();content.value=''">Add</button>
         </div>
         
     </header>
@@ -40,12 +40,11 @@
             <strong>{{ itemCount }}</strong> {{ itemCount == 1? 'item' : 'items'}} left
             
         </span>
-        <ul class="filter list-group list-group-horizontal justify-content-end">
-            <li class="list-group-item"><a href="">All</a></li>
-            <li class="list-group-item"><a href="">Active</a></li>
-            <li class="list-group-item"><a href="">Completed</a></li>
-          </ul>
-        <button class="btn btn-light">Clear Completed</button>
+        <!-- <ul class="filter list-group list-group-horizontal justify-content-end">
+            <li class="list-group-item"><a routerLink="/todo/ALL">All</a></li>
+            <li class="list-group-item" ><a routerLink="/todo/COMPLETED">Completed</a></li>
+          </ul> -->
+        <button class="btn btn-light" (click)="clearCompleted()">Clear Completed</button>
     </footer>
 
 

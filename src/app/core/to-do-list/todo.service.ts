@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -72,6 +72,22 @@ export class TodoService {
       catchError(this.handleError<ToDo[]>('countLeftItems', []))
     );
   }
+
+  // filterTodoItems(filter: string): Observable<ToDo[]> {
+
+  //   switch(filter) {
+  //     case 'COMPLETED': 
+  //     console.log('filter service success' + `${this.todoUrl}?completed=true`);
+      
+  //     return this.http.get<ToDo[]>(`${this.todoUrl}/?completed=true`)
+  //                       .pipe(
+  //                           catchError(this.handleError<ToDo[]>('filterTodoItems', []))
+  //                       );
+  //     default:
+  //       return this.getTodoItems();
+  //   }
+    
+  // }
 
     /**
    * Handle Http operation that failed.

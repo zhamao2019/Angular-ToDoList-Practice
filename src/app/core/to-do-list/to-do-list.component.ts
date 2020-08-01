@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToDo } from "./to-do.model";
 import { TodoService } from './todo.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
@@ -14,13 +15,20 @@ export class ToDoListComponent implements OnInit {
 
   constructor(
     private todoService: TodoService,
-
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     console.log('getTodoItems: success');
     this.getTodoItems();
     this.countLeftItems();
+
+    // this.route.params.subscribe((params: Params) => {
+    //   let filter = params['filter'];
+    //   this.filterTodoItems(filter);
+    // });
+   
   }
 
   getTodoItems(): void {
@@ -43,20 +51,8 @@ export class ToDoListComponent implements OnInit {
   }
 
   toggleTodo(todoItem: ToDo) {
-      let i = this.todoItems.indexOf(todoItem);
-
       this.todoService.toggleTodoItem(todoItem)
-      .subscribe(
-        // t => {
-        //   this.todoItems = [
-        //   ...this.todoItems.slice(0,i),
-        //   ...this.todoItems.slice(i+1),
-        //   t
-        //   ];
-        // });
-
-        //() => this.moveToBottom(this.todoItems, i)
-      )
+      .subscribe();
     }
   
     removeTodo(todoItem: ToDo): void {
@@ -65,7 +61,6 @@ export class ToDoListComponent implements OnInit {
       this.todoService.deleteTodoItemById(todoItem.id)
       .subscribe();
     }
-
 
     countLeftItems() {
       this.itemCount = 0;
@@ -77,52 +72,18 @@ export class ToDoListComponent implements OnInit {
               this.itemCount ++;
             }
           }
-        }
-      )
+        })
     }
 
-    // moveToBottom(todoItems: Array<ToDo>, i) {
-    //   let deleted = todoItems.splice(i, 1);
-    //   todoItems = todoItems.concat(deleted);
-    //   console.log('moveToBottom: ' + JSON.stringify(todoItems));
+    clearCompleted() {
+      let todoItems = this.todoItems.filter(item => item.completed == true);
+      Promise.all(todoItems.map(item => this.removeTodo(item)));
+    }
+
+    // filterTodoItems(filter: string) {
+    //   console.log('filter success: ' + filter);
       
-    //   return todoItems;
+    //   this.todoService.filterTodoItems(filter)
+    //   .subscribe()
     // }
-  // addToDo() {
-  //   this.todoService.addToDo(this.content)
-  //   .then(todoItem => this.todoItems = [...this.todoItems, todoItem]);
-
-  //   this.content = '';
-  // }
-
-  // toggleTodo(todoItem: ToDo) {
-  //   let i = this.todoItems.indexOf(todoItem);
-
-  //   this.todoService.toggleTodoItem(todoItem)
-  //   .then(
-  //     todo => {this.todoItems = [
-  //       ...this.todoItems.slice(0,i),
-  //       todo,
-  //       ...this.todoItems.slice(i+1)
-  //     ]
-  //   });
-  // }
-
-  // removeTodo(todoItem: ToDo) {
-  //   let i = this.todoItems.indexOf(todoItem);
-
-  //   this.todoService.deleteTodoItemById(todoItem.id)
-  //   .then(() =>{
-  //     this.todoItems = [
-  //       ...this.todoItems.slice(0,i),
-  //       ...this.todoItems.slice(i+1)
-  //     ]
-  //   });
-  // }
-
-  // getTodoItems(): void {
-  //   this.todoService.getTodoItems()
-  //   .then(todos => this.todoItems = [todos]);
-  // }
-
 }
