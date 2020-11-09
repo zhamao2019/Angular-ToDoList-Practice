@@ -1,13 +1,12 @@
-# Demo:
 
-click:
+# AngularToDoListPractice
+An application displays the list of things going todo that the user added.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+
+## Demo:
 [Click Here to veiw the demo application](https://zhamao2019.github.io/Angular-ToDoList-Practice/)
 
-
----------------------------
-# AngularToDoListPractice
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+![demo](https://github.com/zhamao2019/Angular-ToDoList-Practice/blob/master/src/angular-todo.png)
 
 ## Development server
 
