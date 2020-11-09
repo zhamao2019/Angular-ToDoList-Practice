@@ -1,7 +1,7 @@
-# See Example here:
+# Demo:
 
 click:
-https://zhamao2019.github.io/Angular-ToDoList-Practice/
+[Click Here to veiw the demo application](https://zhamao2019.github.io/Angular-ToDoList-Practice/)
 
 
 ---------------------------
